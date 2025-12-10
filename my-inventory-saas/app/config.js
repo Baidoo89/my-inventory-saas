@@ -1,0 +1,3 @@
+// This file holds your keys safely
+export const SUPABASE_URL = 'https://rewilwhszkqddklegdbo.supabase.co'
+export const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJld2lsd2hzemtxZGRrbGVnZGJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ3MTYxOTEsImV4cCI6MjA4MDI5MjE5MX0.bLoOvJRiQRPZkwXQIZFrxy5tolbWWTcvDORMOdckytQ'
