@@ -5,7 +5,7 @@ import { createClient } from '@supabase/supabase-js'
 import { useRouter } from 'next/navigation'
 import { SUPABASE_URL, SUPABASE_KEY } from '../config'
 import { Logo } from '../components/Logo'
-import { Mail, Lock, ArrowRight, Loader2, CheckCircle2, AlertCircle, WifiOff, BarChart3, ShieldCheck, Store, Phone, MapPin, User } from 'lucide-react'
+import { Mail, Lock, ArrowRight, Loader2, CheckCircle2, AlertCircle, WifiOff, BarChart3, ShieldCheck, Store, Phone, MapPin, User, Play } from 'lucide-react'
 import Link from 'next/link'
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
@@ -133,6 +133,17 @@ export default function AuthPage() {
         <div className="relative z-10 max-w-lg">
           <h2 className="text-4xl font-bold mb-8 tracking-tight">Manage your shop from anywhere.</h2>
           
+          {/* Demo Video Placeholder */}
+          <div className="mb-10 rounded-2xl overflow-hidden border border-indigo-400/30 shadow-2xl bg-indigo-800/50 aspect-video flex items-center justify-center group cursor-pointer hover:bg-indigo-800/70 transition-all relative">
+            <div className="absolute inset-0 bg-gradient-to-tr from-indigo-900/80 to-transparent"></div>
+            <div className="relative z-10 flex flex-col items-center gap-3">
+                <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform border border-white/30">
+                    <Play className="w-6 h-6 text-white fill-white ml-1" />
+                </div>
+                <span className="text-sm font-medium text-indigo-100 tracking-wide uppercase">Watch Demo</span>
+            </div>
+          </div>
+
           <div className="space-y-8">
             <div className="flex gap-4">
               <div className="w-12 h-12 bg-indigo-500/50 rounded-xl flex items-center justify-center shrink-0 border border-indigo-400/30">
