@@ -103,12 +103,12 @@ export default function AuthPage() {
 
   if (showSplash) {
       return (
-          <div className="fixed inset-0 bg-indigo-600 z-50 flex flex-col items-center justify-center text-white animate-in fade-in duration-500">
-              <div className="scale-150 mb-8 animate-bounce">
-                  <Logo size={80} textClassName="text-white" />
+          <div className="fixed inset-0 bg-indigo-600 z-50 flex flex-col items-center justify-center text-white animate-in fade-in duration-500 px-4">
+              <div className="mb-6 animate-bounce">
+                  <Logo size={80} textClassName="hidden" />
               </div>
-              <h1 className="text-3xl font-bold mb-2 tracking-tight">StockFlow</h1>
-              <p className="text-indigo-200 text-lg font-medium italic">&quot;Master your inventory. Grow your flow.&quot;</p>
+              <h1 className="text-4xl md:text-5xl font-bold mb-2 tracking-tight text-center">StockFlow</h1>
+              <p className="text-indigo-200 text-lg font-medium italic text-center">&quot;Master your inventory. Grow your flow.&quot;</p>
               <div className="mt-12">
                   <Loader2 className="w-8 h-8 animate-spin text-white/50" />
               </div>
