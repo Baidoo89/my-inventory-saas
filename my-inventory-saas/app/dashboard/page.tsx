@@ -12,6 +12,7 @@ import {
   ShoppingCart,
   Trash2,
   Edit2,
+  Brain, // Added Brain icon
 } from "lucide-react";
 import {
   BarChart,
@@ -24,7 +25,9 @@ import {
   AreaChart,
   Area,
 } from "recharts";
+import Link from 'next/link'; // Added Link
 import { cacheProducts, getCachedProducts } from '../utils/offline';
+import { generateSalesForecast } from '../utils/ai-analytics'; // Added AI import
 
 // --- Supabase client ---
 const supabase = createClient(
@@ -38,11 +41,13 @@ const StatCard = ({
   label,
   value,
   currency,
+  link, // Added link prop
 }: {
   type: string;
   label: string;
   value: number;
   currency?: string;
+  link?: string; // Added link prop type
 }) => {
   let Icon = Package;
   let colorClass = "bg-blue-100 text-blue-600";
@@ -56,10 +61,13 @@ const StatCard = ({
   } else if (type === "stockValue") {
     Icon = TrendingUp;
     colorClass = "bg-purple-100 text-purple-600";
+  } else if (type === "aiForecast") { // Added AI type
+    Icon = Brain;
+    colorClass = "bg-indigo-100 text-indigo-600";
   }
 
-  return (
-    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between transition-all hover:shadow-md">
+  const CardContent = () => (
+    <div className={`bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between transition-all hover:shadow-md ${link ? 'cursor-pointer hover:border-indigo-300' : ''}`}>
       <div>
         <p className="text-slate-500 text-sm font-medium mb-1">{label}</p>
         <h3 className="text-2xl font-bold text-slate-800">
@@ -72,6 +80,16 @@ const StatCard = ({
       </div>
     </div>
   );
+
+  if (link) {
+    return (
+      <Link href={link}>
+        <CardContent />
+      </Link>
+    );
+  }
+
+  return <CardContent />;
 };
 
 const SalesChart = ({ data, currencySymbol }: { data: any[], currencySymbol: string }) => {
@@ -161,7 +179,7 @@ export default function Dashboard() {
   const [allProductsForStats, setAllProductsForStats] = useState<any[]>([]); // All products (lightweight) for stats
   const [sales, setSales] = useState<any[]>([]);
   const [chartData, setChartData] = useState<any[]>([]);
-  const [stats, setStats] = useState({ revenue: 0, stockValue: 0, lowStock: 0 });
+  const [stats, setStats] = useState({ revenue: 0, stockValue: 0, lowStock: 0, predictedRevenue: 0 }); // Added predictedRevenue
   const [loading, setLoading] = useState(true);
   const [currencySymbol, setCurrencySymbol] = useState('GH₵');
   const [lowStockThreshold, setLowStockThreshold] = useState(5);
@@ -200,7 +218,11 @@ export default function Dashboard() {
     );
     const lowStockCount = pData.filter((item) => item.stock_quantity < threshold).length;
 
-    // 2. Prepare Chart Data (Group Sales by Date)
+    // 2. AI Forecast (Lightweight)
+    const forecast = generateSalesForecast(sData, 7);
+    const predictedTotal = forecast.forecast.reduce((sum: number, day: any) => sum + day.value, 0);
+
+    // 3. Prepare Chart Data (Group Sales by Date)
     const salesByDate: any = {};
     
     for (let i = 6; i >= 0; i--) {
@@ -228,6 +250,7 @@ export default function Dashboard() {
       revenue: totalRevenue,
       stockValue: totalStockValue,
       lowStock: lowStockCount,
+      predictedRevenue: Math.round(predictedTotal), // Added predictedRevenue
     });
     setChartData(chartArray);
   };
@@ -558,7 +581,8 @@ export default function Dashboard() {
 
         {loading ? (
           <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <StatCardSkeleton />
               <StatCardSkeleton />
               <StatCardSkeleton />
               <StatCardSkeleton />
@@ -568,6 +592,35 @@ export default function Dashboard() {
         ) : (
           <div className="space-y-8">
             
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <StatCard
+                type="revenue"
+                label="Total Revenue"
+                value={stats.revenue}
+                currency={currencySymbol}
+              />
+              <StatCard
+                type="stockValue"
+                label="Stock Value"
+                value={stats.stockValue}
+                currency={currencySymbol}
+              />
+              <StatCard
+                type="lowStock"
+                label="Low Stock Items"
+                value={stats.lowStock}
+                currency=""
+              />
+              <StatCard
+                type="aiForecast"
+                label="AI Predicted (7 Days)"
+                value={stats.predictedRevenue}
+                currency={currencySymbol}
+                link="/dashboard/ai-insights"
+              />
+            </div>
+
             {/* Low Stock Alert Banner */}
             {stats.lowStock > 0 && (
               <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
@@ -583,28 +636,6 @@ export default function Dashboard() {
                 </div>
               </div>
             )}
-
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <StatCard
-                type="revenue"
-                label="Total Revenue"
-                value={stats.revenue}
-                currency={currencySymbol}
-              />
-              <StatCard
-                type="stockValue"
-                label="Inventory Value"
-                value={stats.stockValue}
-                currency={currencySymbol}
-              />
-              <StatCard
-                type="lowStock"
-                label="Low Stock Alerts"
-                value={stats.lowStock}
-                currency=""
-              />
-            </div>
 
             {/* Main Content Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

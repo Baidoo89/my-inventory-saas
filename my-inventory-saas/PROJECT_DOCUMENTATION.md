@@ -180,6 +180,23 @@ The system enforces a "Soft Lock" mechanism for expired subscriptions.
     *   **Functional:** Buttons for `Add Product`, `Checkout`, and `Delete` are programmatically disabled.
     *   **Data Access:** Read access remains enabled (User can view data), but Write access is blocked at the UI level.
 
+### 5.3 AI & Machine Learning Algorithms
+The system employs client-side predictive analytics to aid decision making.
+
+#### A. Linear Regression (Sales Forecasting)
+Used to predict future revenue based on historical sales data.
+*   **Formula:** $y = mx + b$
+*   **Implementation:**
+    1.  Sales data is grouped by date.
+    2.  The system calculates the **Slope ($m$)** and **Y-Intercept ($b$)** using the Least Squares method.
+    3.  It extrapolates the line for the next 7 days ($x_{n+1} ... x_{n+7}$) to forecast revenue.
+
+#### B. Velocity Analysis (Smart Restock)
+Used to predict stockouts before they happen.
+*   **Logic:** Calculates the "Burn Rate" (items sold per day) for each product.
+*   **Formula:** $DaysUntilEmpty = \frac{CurrentStock}{DailySalesVelocity}$
+*   **Trigger:** If $DaysUntilEmpty < 14$, the item is flagged as "High Priority" for restocking.
+
 ---
 
 ## 6. Security Implementation

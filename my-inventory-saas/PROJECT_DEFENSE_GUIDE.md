@@ -36,6 +36,8 @@ Keep your slides simple. Focus on the **Live Demo**.
     *   Mention Next.js for speed and SEO.
     *   Mention Supabase for real-time database and security.
 5.  **Key Features (The "Wow" Factors):**
+    *   **AI-Powered Insights:** Uses Linear Regression to forecast future sales.
+    *   **Smart Restock:** Algorithms analyze sales velocity to predict stockouts.
     *   **Offline POS:** Works without internet.
     *   **Subscription Management:** Auto-expiry and "Read-Only" mode.
     *   **WhatsApp Receipts:** Saves paper cost.
@@ -52,7 +54,8 @@ Examiners love seeing the app work. Follow this flow:
 3.  **The Sale (POS):** Go to POS. Add items to cart. Checkout.
 4.  **The "Magic" (Offline Mode):** *Turn off your WiFi*. Make a sale. Show the alert "Saved locally". Turn WiFi back on. Show it syncing. (Practice this!).
 5.  **Analytics:** Go to the Dashboard and show the sales chart updating.
-6.  **Subscription:** Briefly show the Subscription page and explain the "Pro" vs "Starter" logic.
+6.  **AI Insights (New):** Click on "AI Insights" in the sidebar. Explain that the system uses **Linear Regression** to predict next week's revenue and **Velocity Analysis** to warn about stockouts before they happen.
+7.  **Subscription:** Briefly show the Subscription page and explain the "Pro" vs "Starter" logic.
 
 ---
 
