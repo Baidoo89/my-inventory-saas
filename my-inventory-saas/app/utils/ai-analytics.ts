@@ -1,4 +1,4 @@
-// Simple Linear Regression and Analytics Utility for StockFlow AI
+// Simple Linear Regression and Analytics Utility for SmartStock AI
 
 // 1. Linear Regression for Sales Forecasting
 // Equation: y = mx + b

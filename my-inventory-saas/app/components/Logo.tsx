@@ -38,7 +38,7 @@ export const Logo = ({ className = "", size = 32, textClassName = "" }: { classN
         </svg>
       </div>
       <span className={`font-bold tracking-tight ${textClassName || 'text-slate-900'}`} style={{ fontSize: size * 0.8 }}>
-        StockFlow
+        SmartStock
       </span>
     </div>
   );

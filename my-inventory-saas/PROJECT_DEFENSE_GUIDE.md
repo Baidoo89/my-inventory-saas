@@ -1,4 +1,4 @@
-# Final Year Project Defense Guide: StockFlow Inventory SaaS
+# Final Year Project Defense Guide: SmartStock Inventory SaaS
 
 ## 1. Project Overview
 **Title:** Design and Implementation of a Cloud-Based Inventory Management & POS System for SMEs.

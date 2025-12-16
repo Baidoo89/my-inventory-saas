@@ -1,4 +1,4 @@
-# StockFlow: Technical Documentation & System Design
+# SmartStock: Technical Documentation & System Design
 
 **Student Name:** [Your Name]  
 **Project Title:** Design and Implementation of a Cloud-Based Inventory Management & POS System for SMEs  
@@ -7,7 +7,7 @@
 ---
 
 ## 1. Executive Summary
-StockFlow is a comprehensive SaaS (Software as a Service) application designed to digitize retail operations for Small and Medium Enterprises (SMEs). It addresses critical business challenges such as inventory tracking, sales recording, and business continuity in low-connectivity environments. The system leverages modern web technologies to provide a seamless, responsive, and secure user experience across desktop and mobile devices.
+SmartStock is a comprehensive SaaS (Software as a Service) application designed to digitize retail operations for Small and Medium Enterprises (SMEs). It addresses critical business challenges such as inventory tracking, sales recording, and business continuity in low-connectivity environments. The system leverages modern web technologies to provide a seamless, responsive, and secure user experience across desktop and mobile devices.
 
 ---
 
@@ -65,7 +65,7 @@ This diagram illustrates the interactions between the primary actors (Shop Owner
 usecaseDiagram
     actor "Shop Owner / Admin" as Admin
     
-    package "StockFlow System" {
+    package "SmartStock System" {
         usecase "Register / Login" as UC1
         usecase "Manage Inventory" as UC2
         usecase "Process Sale (POS)" as UC3

@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "StockFlow - Inventory Management for Ghana",
+  title: "SmartStock - Inventory Management for Ghana",
   description: "The #1 inventory app for Ghanaian businesses. Track sales, manage stock, and grow your business.",
 };
 

@@ -83,7 +83,7 @@ export const generateReceipt = (
           <p>Thank you for shopping with us!</p>
           <p>Please come again.</p>
           <div class="branding">
-            Powered by StockFlow
+            Powered by SmartStock
           </div>
         </div>
       </body>
@@ -118,7 +118,7 @@ export const generateWhatsAppText = (
   text += `*TOTAL: ${store.currency}${total.toFixed(2)}*\n`;
   text += `------------------------\n`;
   text += `Thank you for shopping with us!\n`;
-  text += `_Powered by StockFlow_`;
+  text += `_Powered by SmartStock_`;
   
   return encodeURIComponent(text);
 };

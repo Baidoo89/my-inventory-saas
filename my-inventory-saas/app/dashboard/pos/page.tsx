@@ -35,7 +35,7 @@ function PosContent() {
   const [searchTerm, setSearchTerm] = useState('')
   const [taxRate, setTaxRate] = useState(0);
   const [currencySymbol, setCurrencySymbol] = useState('GH₵'); // NEW: State for currency symbol
-  const [storeName, setStoreName] = useState('StockFlow');
+  const [storeName, setStoreName] = useState('SmartStock');
   const [storeAddress, setStoreAddress] = useState('');
   const [storePhone, setStorePhone] = useState('');
   const [isOnline, setIsOnline] = useState(true); // Track online status
@@ -72,7 +72,7 @@ function PosContent() {
         .single();
 
       if (data) {
-        setStoreName(data.store_name || 'StockFlow');
+        setStoreName(data.store_name || 'SmartStock');
         setStoreAddress(data.address || '');
         setStorePhone(data.phone || '');
         setCurrencySymbol(data.currency_symbol || 'GH₵');
@@ -389,7 +389,7 @@ function PosContent() {
     <div className="flex flex-col md:flex-row h-[calc(100vh-64px)]">
       {/* Product Grid (Left/Main Area) */}
       <div className="flex-1 p-4 md:p-8 overflow-y-auto">
-        <h1 className="text-3xl font-bold text-slate-900 mb-6">{storeName === 'StockFlow' ? 'Point of Sale' : `${storeName} POS`}</h1>
+        <h1 className="text-3xl font-bold text-slate-900 mb-6">{storeName === 'SmartStock' ? 'Point of Sale' : `${storeName} POS`}</h1>
         
         {/* Offline Notice Banner */}
         {!isOnline && (

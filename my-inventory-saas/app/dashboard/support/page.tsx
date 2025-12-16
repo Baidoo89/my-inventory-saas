@@ -7,7 +7,7 @@ export default function SupportPage() {
     <div className="max-w-4xl mx-auto space-y-8">
       <div>
         <h1 className="text-3xl font-bold text-slate-900">Help & Support</h1>
-        <p className="text-slate-500 mt-1">Get assistance and learn more about StockFlow.</p>
+        <p className="text-slate-500 mt-1">Get assistance and learn more about SmartStock.</p>
       </div>
 
       {/* Developer Contact Card */}
@@ -76,10 +76,10 @@ export default function SupportPage() {
 
       {/* About Section */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
-        <h2 className="text-xl font-bold text-slate-800 mb-4">About StockFlow</h2>
+        <h2 className="text-xl font-bold text-slate-800 mb-4">About SmartStock</h2>
         <div className="prose prose-slate max-w-none text-slate-600">
             <p>
-                StockFlow is a premier inventory management solution designed specifically for the Ghanaian market. 
+                SmartStock is a premier inventory management solution designed specifically for the Ghanaian market.
                 Our mission is to empower small and medium-sized businesses with professional tools to track sales, 
                 manage stock, and grow their revenue.
             </p>

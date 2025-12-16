@@ -58,7 +58,7 @@ export default function Sidebar({ subscriptionPlan, onClose }: SidebarProps) {
       <div className="mt-auto pt-6 border-t border-indigo-700">
         <div className="text-center">
             <p className="text-xs font-semibold text-indigo-300 mb-1">
-            StockFlow v1.0.0
+            SmartStock v1.0.0
             </p>
             <p className="text-[10px] text-indigo-400">
             Built by TeCH Dalt89

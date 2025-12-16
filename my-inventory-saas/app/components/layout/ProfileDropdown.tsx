@@ -16,7 +16,7 @@ type ProfileDropdownProps = {
 export default function ProfileDropdown({ onLogout, userEmail }: ProfileDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [preferredName, setPreferredName] = useState('');
-  const [storeName, setStoreName] = useState('StockFlow')
+  const [storeName, setStoreName] = useState('SmartStock')
   const [address, setAddress] = useState('')
   const [phone, setPhone] = useState('')
   const [profileImage, setProfileImage] = useState<string | null>(null); // NEW: Profile Image State
@@ -37,7 +37,7 @@ export default function ProfileDropdown({ onLogout, userEmail }: ProfileDropdown
         .single();
 
       if (data) {
-        setStoreName(data.store_name || 'StockFlow');
+        setStoreName(data.store_name || 'SmartStock');
         setAddress(data.address || '');
         setPhone(data.phone || '');
         if (data.preferred_name) setPreferredName(data.preferred_name); // Use DB name if available

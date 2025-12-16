@@ -16,7 +16,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 function DashboardContent({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
-  const [storeName, setStoreName] = useState<string>('StockFlow');
+  const [storeName, setStoreName] = useState<string>('SmartStock');
   const pathname = usePathname();
   const router = useRouter();
   const { plan, isExpired } = useSubscription();

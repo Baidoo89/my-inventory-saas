@@ -107,7 +107,7 @@ export default function AuthPage() {
               <div className="mb-6 animate-bounce">
                   <Logo size={80} textClassName="hidden" />
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-2 tracking-tight text-center">StockFlow</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-2 tracking-tight text-center">SmartStock</h1>
               <p className="text-indigo-200 text-lg font-medium italic text-center">&quot;Master your inventory. Grow your flow.&quot;</p>
               <div className="mt-12">
                   <Loader2 className="w-8 h-8 animate-spin text-white/50" />
@@ -178,7 +178,7 @@ export default function AuthPage() {
         </div>
 
         <div className="relative z-10 text-sm text-indigo-200">
-          © 2025 StockFlow Ghana. Built by TeCH Dalt89.
+          © 2025 SmartStock Ghana. Built by TeCH Dalt89.
         </div>
       </div>
 

@@ -22,7 +22,7 @@ export default function TransactionsPage() {
   const [searchTerm, setSearchTerm] = useState('') // NEW: Search state
   const [currencySymbol, setCurrencySymbol] = useState('GH₵');
   const [storeSettings, setStoreSettings] = useState({
-    name: 'StockFlow',
+    name: 'SmartStock',
     address: '',
     phone: '',
     currency: 'GH₵',
@@ -47,7 +47,7 @@ export default function TransactionsPage() {
 
     if (profile) {
       setStoreSettings({
-        name: profile.store_name || 'StockFlow',
+        name: profile.store_name || 'SmartStock',
         address: profile.address || '',
         phone: profile.phone || '',
         currency: profile.currency_symbol || 'GH₵',
@@ -139,7 +139,7 @@ export default function TransactionsPage() {
   return (
     <div className="w-full">
       <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-        <h1 className="text-3xl font-bold text-slate-900">{storeSettings.name === 'StockFlow' ? 'Transactions' : `${storeSettings.name} Transactions`}</h1>
+        <h1 className="text-3xl font-bold text-slate-900">{storeSettings.name === 'SmartStock' ? 'Transactions' : `${storeSettings.name} Transactions`}</h1>
         
         <div className="flex items-center gap-4 w-full md:w-auto">
             <div className="relative flex-grow md:flex-grow-0">

@@ -1,11 +1,11 @@
-# StockFlow - SME Inventory & POS System
+# SmartStock - SME Inventory & POS System
 
 **Final Year Project**
 **Student Name:** [Your Name]
 **Supervisor:** [Supervisor Name]
 
 ## ?? Project Overview
-StockFlow is a cloud-based Inventory Management and Point of Sale (POS) system designed for Small and Medium Enterprises (SMEs). It solves the problem of manual stock keeping by providing a digital, real-time solution for tracking products, recording sales, and managing business performance.
+SmartStock is a cloud-based Inventory Management and Point of Sale (POS) system designed for Small and Medium Enterprises (SMEs). It solves the problem of manual stock keeping by providing a digital, real-time solution for tracking products, recording sales, and managing business performance.
 
 ## ? Key Features
 *   **Dashboard Analytics**: Real-time overview of sales, revenue, and low stock alerts.
@@ -32,8 +32,8 @@ StockFlow is a cloud-based Inventory Management and Point of Sale (POS) system d
 
 1.  **Clone the repository** (or unzip the project folder):
     `ash
-    git clone https://github.com/yourusername/stockflow.git
-    cd stockflow
+    git clone https://github.com/yourusername/smartstock.git
+    cd smartstock
     ``n
 2.  **Install Dependencies**:
     `ash
