@@ -5,7 +5,7 @@ import { createClient } from '@supabase/supabase-js'
 import { SUPABASE_URL, SUPABASE_KEY } from '../../config'
 import ProductCard from './components/ProductCard'
 import CartSidebar from './components/CartSidebar'
-import { Search, Plus, CheckCircle, Printer, RefreshCw, MessageCircle } from 'lucide-react'
+import { Search, Plus, CheckCircle, Printer, RefreshCw, MessageCircle, AlertTriangle } from 'lucide-react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { generateReceipt, generateWhatsAppText } from '../../utils/receipt'
 import { printHtml } from '../../utils/print'
@@ -40,6 +40,7 @@ function PosContent() {
   const [storePhone, setStorePhone] = useState('');
   const [isOnline, setIsOnline] = useState(true); // Track online status
   const [paymentMethod, setPaymentMethod] = useState('Cash'); // Default to Cash
+  const [userId, setUserId] = useState<string | null>(null); // Cache user id for offline mode
   const [lastSale, setLastSale] = useState<{
     items: CartItem[];
     subtotal: number;
@@ -62,6 +63,7 @@ function PosContent() {
     const loadSettings = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
+      setUserId(user.id);
 
       const { data, error } = await supabase
         .from('profiles')
@@ -82,6 +84,7 @@ function PosContent() {
     // Online/Offline listeners
     const handleOnline = async () => {
       setIsOnline(true);
+      // Attempt sync immediately when page mounts or regains connection
       const { synced, errors } = await syncOfflineSales();
       if (synced > 0) alert(`Synced ${synced} offline sales to database.`);
       if (errors > 0) alert(`Failed to sync ${errors} sales. Will retry next time.`);
@@ -91,6 +94,15 @@ function PosContent() {
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
     setIsOnline(navigator.onLine);
+
+    // Run an initial sync pass on load if online
+    if (navigator.onLine) {
+      (async () => {
+        const { synced, errors } = await syncOfflineSales();
+        if (synced > 0) alert(`Synced ${synced} offline sales to database.`);
+        if (errors > 0) alert(`Failed to sync ${errors} sales. Will retry next time.`);
+      })();
+    }
 
     return () => {
       window.removeEventListener('online', handleOnline);
@@ -204,6 +216,7 @@ function PosContent() {
       const cached = getCachedProducts();
       if (cached.length > 0) {
         setProducts(cached);
+        setFilteredProducts(cached);
       }
     } finally {
       setLoading(false)
@@ -271,12 +284,18 @@ function PosContent() {
     if (!window.confirm('Confirm checkout?')) return
 
     setLoading(true)
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user && !userId) setUserId(user.id);
+    const activeUserId = user?.id || userId;
+    if (!activeUserId) {
+      alert('User not authenticated. Please log in.');
+      setLoading(false);
+      return;
+    }
+    
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("User not authenticated");
-
       const saleItems = cart.map((item) => ({
-        user_id: user.id,
+        user_id: activeUserId,
         product_id: item.id,
         product_name: item.name,
         quantity: item.quantity,
@@ -299,9 +318,10 @@ function PosContent() {
       finalizeSale(saleItems);
       fetchProducts()
     } catch (error: any) {
-      // Offline fallback
+      // Offline fallback (activeUserId available from outer scope)
       if (!navigator.onLine || error.message?.includes('fetch') || error.message?.includes('network')) {
-          const saleItems = cart.map((item) => ({
+          const offlineSales = cart.map((item) => ({
+            user_id: activeUserId,
             product_id: item.id,
             product_name: item.name,
             quantity: item.quantity,
@@ -310,10 +330,10 @@ function PosContent() {
             payment_method: paymentMethod,
           }));
           
-          saleItems.forEach(sale => saveOfflineSale(sale));
+          offlineSales.forEach(sale => saveOfflineSale(sale));
           
           alert('Offline mode: Sale saved locally. Will sync when online.');
-          finalizeSale(saleItems);
+          finalizeSale(offlineSales);
       } else {
           console.error('Checkout error:', error.message)
           alert('Checkout failed: ' + error.message)
@@ -371,6 +391,20 @@ function PosContent() {
       <div className="flex-1 p-4 md:p-8 overflow-y-auto">
         <h1 className="text-3xl font-bold text-slate-900 mb-6">{storeName === 'StockFlow' ? 'Point of Sale' : `${storeName} POS`}</h1>
         
+        {/* Offline Notice Banner */}
+        {!isOnline && (
+          <div className="mb-6 bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-center gap-3">
+            <AlertTriangle className="text-amber-600 flex-shrink-0" size={24} />
+            <div>
+              <h4 className="font-bold text-amber-900">Offline Mode</h4>
+              <p className="text-sm text-amber-800">
+                You are currently offline. Sales will be saved locally and synced when you reconnect.
+                {filteredProducts.length === 0 && ' No cached products available—go online once to load your catalog.'}
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Search Bar */}
         <div className="mb-6 flex items-center bg-white p-3 rounded-lg shadow-sm border border-slate-300">
           <Search size={20} className="text-slate-500 mr-3" />

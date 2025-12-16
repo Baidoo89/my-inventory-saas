@@ -1,7 +1,25 @@
 export const printHtml = (htmlContent: string) => {
-  // Create a hidden iframe
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  // Mobile browsers often block iframe print dialogs. Use a new tab fallback there.
+  if (isMobile) {
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) return;
+    printWindow.document.open();
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+    // Give the new window a tick to render before printing
+    setTimeout(() => {
+      printWindow.focus();
+      printWindow.print();
+      // Close after print to avoid leaving blank tabs
+      printWindow.close();
+    }, 300);
+    return;
+  }
+
+  // Desktop path: use hidden iframe for cleaner print rendering
   const iframe = document.createElement('iframe');
-  // Use absolute positioning off-screen instead of 0x0 size to ensure browser renders it
   iframe.style.position = 'absolute';
   iframe.style.left = '-9999px';
   iframe.style.top = '0';
@@ -19,14 +37,11 @@ export const printHtml = (htmlContent: string) => {
     
     iframe.onload = () => {
       try {
-        // Focus is required for some browsers (IE/Edge) before printing
         iframe.contentWindow?.focus();
         iframe.contentWindow?.print();
       } catch (err) {
         console.error('Printing failed:', err);
       } finally {
-        // Remove the iframe after a short delay
-        // The print dialog blocks execution in many browsers, so this runs after the dialog closes
         setTimeout(() => {
           if (document.body.contains(iframe)) {
             document.body.removeChild(iframe);
